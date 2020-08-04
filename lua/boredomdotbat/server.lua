@@ -1,6 +1,7 @@
 util.AddNetworkString("BoredomDotBat:ModuleToggled")
 util.AddNetworkString("BoredomDotBat:SendConfig")
 
+-- Load Config
 function BoredomDotbat.LoadConfig()
     if file.Exists("boredomdotbat.txt", "DATA") then
         local data = util.JSONToTable(file.Read("boredomdotbat.txt")) or {}
@@ -22,6 +23,7 @@ function BoredomDotbat.LoadConfig()
     end
 end
 
+-- Save Config
 function BoredomDotbat.SaveConfig()
     local data = {}
 
@@ -32,6 +34,7 @@ function BoredomDotbat.SaveConfig()
     file.Write("boredomdotbat.txt", util.TableToJSON(data))
 end
 
+-- This is not protected except for the CanChange check
 net.Receive("BoredomDotBat:ModuleToggled", function(l, ply)
     local name = net.ReadString()
     local bool = net.ReadBool()

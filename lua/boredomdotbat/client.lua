@@ -26,7 +26,7 @@ function BoredomDotbat.OpenMenu()
     BoredomDotbat.Frame = vgui.Create("DFrame")
     local f = BoredomDotbat.Frame
     f:SetTitle("BoredomDotBat")
-    f:SetSize(300, 250)
+    f:SetSize(400, 300)
     f:Center()
     f:MakePopup()
     f.scroll = vgui.Create("DScrollPanel", f)
@@ -35,7 +35,7 @@ function BoredomDotbat.OpenMenu()
     for name, data in pairs(BoredomDotbat.Modules) do
         local pnl = vgui.Create("DPanel", f.scroll)
         pnl:Dock(TOP)
-        pnl:SetTall(80)
+        pnl:SetTall(70)
         pnl:DockMargin(5, 0, 0, 5)
         pnl.Paint = function() end
         local Checkbox = vgui.Create("DCheckBoxLabel", pnl)

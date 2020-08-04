@@ -1,8 +1,10 @@
 Hooks = Hooks or {}
 
+-- A Way to only overwrite a hook if "case" is true
 function BoredomDotbat.HookIf(case, hookName, name, func)
     BoredomDotbat.LogDebug("Overwrite hook: " .. hookName .. ":" .. name)
 
+    -- Preserve it for later
     if not Hooks[hookName .. ":" .. name] then
         Hooks[hookName .. ":" .. name] = hook.GetTable()[hookName][name]
     end
@@ -12,6 +14,7 @@ function BoredomDotbat.HookIf(case, hookName, name, func)
     end
 end
 
+-- A Way to undo a overwrite (will do nothing if not overwritten with HookIf before)
 function BoredomDotbat.HookUndo(hookName, name)
     BoredomDotbat.LogDebug("Undo hook: " .. hookName .. ":" .. name)
     if not Hooks[hookName .. ":" .. name] then return end
@@ -19,6 +22,7 @@ function BoredomDotbat.HookUndo(hookName, name)
     Hooks[hookName .. ":" .. name] = nil
 end
 
+-- A Way to enable/disable a Module
 function BoredomDotbat.EnableModule(name, enabled)
     local Module = BoredomDotbat.Modules[name]
     Module.Enabled = enabled
@@ -35,6 +39,6 @@ function BoredomDotbat.EnableModule(name, enabled)
         net.WriteBool(enabled)
         net.Broadcast()
         BoredomDotbat.SaveConfig()
-        BoredomDotbat.Log("Module " .. name .. " Toggled.", enabled)
+        BoredomDotbat.LogDebug("Module " .. name .. " Toggled.", enabled)
     end
 end
