@@ -47,10 +47,12 @@ for i = 1, #modules do
     end
 end
 
-hook.Add("Think", "BoredomDotBat:LoadConfig", function()
-    hook.Remove("Think", "BoredomDotBat:LoadConfig")
-    BoredomDotbat.LoadConfig()
-end)
+if SERVER then
+    hook.Add("Think", "BoredomDotBat:LoadConfig", function()
+        hook.Remove("Think", "BoredomDotBat:LoadConfig")
+        BoredomDotbat.LoadConfig()
+    end)
+end
 
 concommand.Add("boredom_toggle", function(ply, str, args, argstr)
     local Module = args[1] and BoredomDotbat.Modules[args[1]] or false
