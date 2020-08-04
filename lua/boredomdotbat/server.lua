@@ -11,7 +11,7 @@ function BoredomDotbat.LoadConfig()
             local Module = BoredomDotbat.Modules[name]
 
             if Module then
-                print(name, enabled)
+                BoredomDotbat.LogDebug(name, enabled)
                 Module.Enabled = enabled
                 net.WriteString(name)
                 net.WriteBool(enabled)
