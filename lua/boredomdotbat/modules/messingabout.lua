@@ -38,7 +38,7 @@ local function Run()
     end)
 end
 
-Module.CanEnable = function() return true end
+Module.CanChange = function() return true end
 
 Module.OnEnable = function()
     hook.Add("Boredom:IsMessingAround", "BoredomDotBat:Notifier", Run)

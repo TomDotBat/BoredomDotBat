@@ -10,7 +10,7 @@ local function disallow(ply, enable)
     end
 end
 
-Module.CanEnable = function() return true end
+Module.CanChange = function() return true end
 
 Module.OnEnable = function()
     -- Add limitation 

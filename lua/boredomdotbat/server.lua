@@ -35,7 +35,11 @@ end
 net.Receive("BoredomDotBat:ModuleToggled", function(l, ply)
     local name = net.ReadString()
     local bool = net.ReadBool()
-    BoredomDotbat.EnableModule(name, bool)
+    local Module = BoredomDotbat.Modules[name]
+
+    if Module and Module.CanChange(ply) then
+        BoredomDotbat.EnableModule(name, bool)
+    end
 end)
 
 hook.Add("PlayerInitialSpawn", "BoredomDotBat:SendConfig", function(ply)
