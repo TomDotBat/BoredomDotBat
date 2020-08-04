@@ -25,6 +25,7 @@ end
 -- A Way to enable/disable a Module
 function BoredomDotbat.EnableModule(name, enabled)
     local Module = BoredomDotbat.Modules[name]
+    if not Module then return end
     Module.Enabled = enabled
 
     if enabled then
