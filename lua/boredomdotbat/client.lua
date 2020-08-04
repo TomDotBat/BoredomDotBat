@@ -17,3 +17,44 @@ net.Receive("BoredomDotBat:SendConfig", function()
 
     BoredomDotbat.LogDebug("Got Config for all modules")
 end)
+
+function BoredomDotbat.OpenMenu()
+    if IsValid(BoredomDotbat.Frame) then
+        BoredomDotbat.Frame:Remove()
+    end
+
+    BoredomDotbat.Frame = vgui.Create("DFrame")
+    local f = BoredomDotbat.Frame
+    f:SetTitle("BoredomDotBat")
+    f:SetSize(300, 250)
+    f:Center()
+    f:MakePopup()
+    f.scroll = vgui.Create("DScrollPanel", f)
+    f.scroll:Dock(FILL)
+
+    for name, data in pairs(BoredomDotbat.Modules) do
+        local pnl = vgui.Create("DPanel", f.scroll)
+        pnl:Dock(TOP)
+        pnl:SetTall(80)
+        pnl:DockMargin(5, 0, 0, 5)
+        pnl.Paint = function() end
+        local Checkbox = vgui.Create("DCheckBoxLabel", pnl)
+        Checkbox:Dock(TOP)
+        Checkbox:SetText(data.Name)
+        Checkbox:SetChecked(data.Enabled)
+        Checkbox:SizeToContents()
+        Checkbox.id = name
+        local Description = vgui.Create("DLabel", pnl)
+        Description:SetText(data.Description or "No Description")
+        Description:SetWrap(true)
+        Description:Dock(TOP)
+        Description:SetAutoStretchVertical(true)
+
+        function Checkbox:OnChange(bVal)
+            net.Start("BoredomDotBat:ModuleToggled")
+            net.WriteString(self.id)
+            net.WriteBool(bVal)
+            net.SendToServer()
+        end
+    end
+end

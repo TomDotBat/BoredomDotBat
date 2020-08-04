@@ -32,6 +32,12 @@ function BoredomDotbat.SaveConfig()
     file.Write("boredomdotbat.txt", util.TableToJSON(data))
 end
 
+net.Receive("BoredomDotBat:ModuleToggled", function(l, ply)
+    local name = net.ReadString()
+    local bool = net.ReadBool()
+    BoredomDotbat.EnableModule(name, bool)
+end)
+
 hook.Add("PlayerInitialSpawn", "BoredomDotBat:SendConfig", function(ply)
     net.Start("BoredomDotBat:SendConfig")
     net.WriteUInt(table.Count(BoredomDotbat.Modules), 7)
