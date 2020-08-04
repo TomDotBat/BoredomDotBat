@@ -17,6 +17,9 @@ function BoredomDotbat.LogDebug(str, ...)
     print("[BoredomDotbat] [Debug] " .. str, ...)
 end
 
+--[[
+    Loading required stuff
+]]
 BoredomDotbat.Log("Loading...")
 AddCSLuaFile("boredomdotbat/shared.lua")
 AddCSLuaFile("boredomdotbat/client.lua")
@@ -26,4 +29,22 @@ if SERVER then
     include("boredomdotbat/server.lua")
 else
     include("boredomdotbat/client.lua")
+end
+
+--[[
+    Loading Modules
+]]
+local len = 0
+local modules, _ = file.Find("boredomdotbat/modules/*.lua", "LUA")
+
+for i = 1, #modules do
+    module_file = modules[i]
+    AddCSLuaFile("boredomdotbat/modules/" .. module_file)
+    local Module = include("boredomdotbat/modules/" .. module_file)
+
+    if Module then
+        len = len + 1
+        BoredomDotbat.Modules[len] = Module
+        BoredomDotbat.Log(Module.Name .. " Loaded")
+    end
 end
