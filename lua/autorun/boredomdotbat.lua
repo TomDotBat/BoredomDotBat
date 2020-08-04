@@ -48,3 +48,24 @@ for i = 1, #modules do
         BoredomDotbat.Log(Module.Name .. " Loaded")
     end
 end
+
+concommand.Add("boredom_toggle", function(ply, str, args, argstr)
+    local name = table.concat(args, " ")
+
+    for i = 1, #BoredomDotbat.Modules do
+        local Module = BoredomDotbat.Modules[i]
+        if Module.Name ~= name then continue end
+
+        if Module.Enabled then
+            Module.OnDisable()
+        else
+            Module.OnEnable()
+        end
+
+        Module.Enabled = not Module.Enabled
+
+        return
+    end
+
+    BoredomDotbat.Log("Module " .. args[1] .. " Not found.")
+end, function(cmd, args) end, "Toggle a Module for testing")
