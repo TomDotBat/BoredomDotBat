@@ -47,6 +47,8 @@ for i = 1, #modules do
     end
 end
 
+hook.Add("Initialize", "BoredomDotBat:LoadConfig", BoredomDotbat.LoadConfig)
+
 concommand.Add("boredom_toggle", function(ply, str, args, argstr)
     local Module = args[1] and BoredomDotbat.Modules[args[1]] or false
 
