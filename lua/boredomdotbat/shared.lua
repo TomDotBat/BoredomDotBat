@@ -42,3 +42,7 @@ function BoredomDotbat.EnableModule(name, enabled)
         BoredomDotbat.LogDebug("Module " .. name .. " Toggled.", enabled)
     end
 end
+
+function BoredomDotbat.IsEnabled(name)
+    return BoredomDotbat.Modules[name].Enabled
+end
