@@ -34,7 +34,6 @@ end
 --[[
     Loading Modules
 ]]
-local len = 0
 local modules, _ = file.Find("boredomdotbat/modules/*.lua", "LUA")
 
 for i = 1, #modules do
@@ -43,29 +42,32 @@ for i = 1, #modules do
     local Module = include("boredomdotbat/modules/" .. module_file)
 
     if Module then
-        len = len + 1
-        BoredomDotbat.Modules[len] = Module
+        BoredomDotbat.Modules[string.sub(module_file, 1, -5)] = Module
         BoredomDotbat.Log(Module.Name .. " Loaded")
     end
 end
 
 concommand.Add("boredom_toggle", function(ply, str, args, argstr)
-    local name = table.concat(args, " ")
+    local Module = args[1] and BoredomDotbat.Modules[args[1]] or false
 
-    for i = 1, #BoredomDotbat.Modules do
-        local Module = BoredomDotbat.Modules[i]
-        if Module.Name ~= name then continue end
-
-        if Module.Enabled then
-            Module.OnDisable()
-        else
-            Module.OnEnable()
-        end
-
-        Module.Enabled = not Module.Enabled
+    if Module then
+        BoredomDotbat.EnableModule(args[1], not Module.Enabled)
 
         return
     end
 
-    BoredomDotbat.Log("Module " .. args[1] .. " Not found.")
+    BoredomDotbat.Log("Module " .. (args[1] or "N/A") .. " Not found.")
+end, function(cmd, args) end, "Toggle a Module for testing")
+
+concommand.Add("boredom_broadcast", function(ply, str, args, argstr)
+    net.Start("BoredomDotBat:SendConfig")
+    net.WriteUInt(table.Count(BoredomDotbat.Modules), 7)
+
+    for k, v in pairs(BoredomDotbat.Modules) do
+        net.WriteString(k)
+        net.WriteBool(v.Enabled)
+    end
+
+    net.Broadcast()
+    BoredomDotbat.Log("Sent config to all players.")
 end, function(cmd, args) end, "Toggle a Module for testing")
