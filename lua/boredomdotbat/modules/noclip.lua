@@ -4,12 +4,7 @@ Module.Description = "Prevents you from noclipping around."
 
 local function disallow(ply, enable)
     if enable then
-        ply.BoredNoclip = (ply.BoredNoclip or 0) + 1
-
-        if ply.BoredNoclip > 3 then
-            ply.BoredNoclip = 0
-            hook.Run("Boredom:IsMessingAround", ply, "noclip")
-        end
+        hook.Run("Boredom:IsMessingAround", ply, "noclip")
 
         return false
     end
