@@ -1,5 +1,5 @@
 local Module = {}
-Module.Name = "Noclip Module"
+Module.Name = "Disable Noclip"
 Module.Description = "Prevents you from noclipping around."
 
 local function disallow(ply, enable)

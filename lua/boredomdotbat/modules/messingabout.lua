@@ -1,5 +1,5 @@
 local Module = {}
-Module.Name = "Messing About"
+Module.Name = "Messing About Screen"
 Module.Description = "[WARNING: dont enable that if you have problems with random lights or colors]\n Gives you a small notification that you should not mess about and work."
 
 if CLIENT then
