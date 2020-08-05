@@ -3,6 +3,7 @@ Module.Name = "Punishments"
 Module.Description = "A System to Punish you when you do stuff you disabled\n(contains flashing lights and stuff)"
 
 local Punishments = {
+    function() end, -- no punish?
     function()
         if SERVER then return end
 
@@ -43,7 +44,10 @@ end
 Module.CanChange = function(ply) return ply:IsSuperAdmin() end
 
 Module.OnEnable = function()
-    hook.Add("Boredom:IsMessingAround", "BoredomDotBat:Notifier", function()
+    hook.Add("Boredom:IsMessingAround", "BoredomDotBat:Notifier", function(ply)
+        if (ply.__BoringPunishCooldown or 0) > CurTime() then return end
+        ply.__BoringPunishCooldown = CurTime() + 2
+        print(ply.__BoringPunishCooldown)
         table.Random(Punishments)()
     end)
 end
