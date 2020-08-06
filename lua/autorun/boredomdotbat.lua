@@ -52,29 +52,39 @@ if SERVER then
         hook.Remove("Think", "BoredomDotBat:LoadConfig")
         BoredomDotbat.LoadConfig()
     end)
+
+    concommand.Add("boredomdot", function(ply, str, args, argstr)
+        local command = args[1] or "list"
+        table.remove(args, 1)
+
+        if command == "toggle" then
+            local Module = args[1] and BoredomDotbat.Modules[args[1]] or false
+
+            if Module then
+                BoredomDotbat.EnableModule(args[1], not Module.Enabled)
+                BoredomDotbat.Log("Module <" .. args[1] .. "> " .. (Module.Enabled and "Enabled" or "Disabled"))
+
+                return
+            end
+
+            BoredomDotbat.Log("Module " .. (args[1] or "N/A") .. " Not found.")
+
+            return
+        end
+
+        if command == "list" then
+            BoredomDotbat.Log("> List of all Modules")
+            BoredomDotbat.Log("> Format: <id> Name: Description")
+            BoredomDotbat.Log("> To Enable/Disable a Module use 'boredomdot toggle <id>'")
+            BoredomDotbat.Log("=========================================================")
+
+            for name, data in pairs(BoredomDotbat.Modules) do
+                BoredomDotbat.Log("<" .. name .. "> " .. (data.Name or "No Name") .. ": " .. string.Replace(data.Description, "\n", " "))
+            end
+
+            return
+        end
+
+        BoredomDotbat.Log("Command " .. command .. " not found.")
+    end, function(cmd, args) end, "Toggle a Module")
 end
-
-concommand.Add("boredom_toggle", function(ply, str, args, argstr)
-    local Module = args[1] and BoredomDotbat.Modules[args[1]] or false
-
-    if Module then
-        BoredomDotbat.EnableModule(args[1], not Module.Enabled)
-
-        return
-    end
-
-    BoredomDotbat.Log("Module " .. (args[1] or "N/A") .. " Not found.")
-end, function(cmd, args) end, "Toggle a Module for testing")
-
-concommand.Add("boredom_broadcast", function(ply, str, args, argstr)
-    net.Start("BoredomDotBat:SendConfig")
-    net.WriteUInt(table.Count(BoredomDotbat.Modules), 7)
-
-    for k, v in pairs(BoredomDotbat.Modules) do
-        net.WriteString(k)
-        net.WriteBool(v.Enabled)
-    end
-
-    net.Broadcast()
-    BoredomDotbat.Log("Sent config to all players.")
-end, function(cmd, args) end, "Toggle a Module for testing")
