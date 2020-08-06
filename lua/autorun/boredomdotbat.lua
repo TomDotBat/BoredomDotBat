@@ -74,7 +74,7 @@ if SERVER then
 
         if command == "list" then
             BoredomDotbat.Log("> List of all Modules")
-            BoredomDotbat.Log("> Format: <id> Name: Description")
+            BoredomDotbat.Log("> Format: <id> (status) Name: Description")
             BoredomDotbat.Log("> To Enable/Disable a Module use 'boredomdot toggle <id>'")
             BoredomDotbat.Log("=========================================================")
 
