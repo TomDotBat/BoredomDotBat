@@ -56,5 +56,11 @@ function BoredomDotbat.OpenMenu()
             net.WriteBool(bVal)
             net.SendToServer()
         end
+
+        if not data.CanChange(LocalPlayer()) then
+            Checkbox:SetDisabled(true)
+        end
     end
 end
+
+concommand.Add("boredomdotmenu", BoredomDotbat.OpenMenu)
