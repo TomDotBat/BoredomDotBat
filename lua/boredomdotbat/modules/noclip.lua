@@ -4,7 +4,7 @@ Module.Description = "Prevents you from noclipping around."
 
 local function disallow(ply, enable)
     if enable then
-        hook.Run("Boredom:IsMessingAround", ply, "noclip")
+        hook.Run("Boredom:IsMessingAround", ply)
 
         return false
     end

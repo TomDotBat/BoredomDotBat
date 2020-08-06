@@ -3,7 +3,9 @@ Module.Name = "Anti No-Entities"
 Module.Description = "Prevents you from spawning any non-entity stuff."
 Module.CanChange = function() return true end
 
-local function Disallow()
+local function Disallow(ply)
+    ply:SendLua("hook.Run(\"Boredom:IsMessingAround\")") -- i know, not best but it works lol
+
     return false
 end
 
