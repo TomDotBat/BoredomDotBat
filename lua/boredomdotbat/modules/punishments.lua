@@ -45,6 +45,7 @@ Module.CanChange = function(ply) return ply:IsSuperAdmin() end
 
 Module.OnEnable = function()
     hook.Add("Boredom:IsMessingAround", "BoredomDotBat:Notifier", function(ply)
+        ply = ply or LocalPlayer() -- just in case
         if (ply.__BoringPunishCooldown or 0) > CurTime() then return end
         ply.__BoringPunishCooldown = CurTime() + 2
         print(ply.__BoringPunishCooldown)
