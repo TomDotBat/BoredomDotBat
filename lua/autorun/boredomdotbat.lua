@@ -79,7 +79,7 @@ if SERVER then
             BoredomDotbat.Log("=========================================================")
 
             for name, data in pairs(BoredomDotbat.Modules) do
-                BoredomDotbat.Log("<" .. name .. "> " .. (data.Name or "No Name") .. ": " .. string.Replace(data.Description, "\n", " "))
+                BoredomDotbat.Log("<" .. name .. "> (" .. (data.Enabled and "Enabled" or "Disabled") .. ") " .. (data.Name or "No Name") .. ": " .. string.Replace(data.Description, "\n", " "))
             end
 
             return
