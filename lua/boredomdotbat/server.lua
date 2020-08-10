@@ -5,21 +5,10 @@ util.AddNetworkString("BoredomDotBat:SendConfig")
 function BoredomDotbat.LoadConfig()
     if file.Exists("boredomdotbat.txt", "DATA") then
         local data = util.JSONToTable(file.Read("boredomdotbat.txt")) or {}
-        net.Start("BoredomDotBat:SendConfig")
-        net.WriteUInt(table.Count(BoredomDotbat.Modules), 7)
 
         for name, enabled in pairs(data) do
-            local Module = BoredomDotbat.Modules[name]
-
-            if Module then
-                BoredomDotbat.LogDebug(name, enabled)
-                Module.Enabled = enabled
-                net.WriteString(name)
-                net.WriteBool(enabled)
-            end
+            BoredomDotbat.EnableModule(name, enabled)
         end
-
-        net.Broadcast()
     end
 end
 
